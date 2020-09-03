@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i|Catamaran|Roboto+Condensed"/>
+      <title>Putri's Repl</title>
+      <link rel="stylesheet" type= 'text/css' href="{{ url_for('static', filename='style.css') }}">
+    </head>
+
+    <body>
+        <h1>
+          Welcome to Putri's AI Project!
+        </h1>
+
+      <p>
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+        </p>
+
+        {% if filename %}
+            <div>
+                <img class="image" src="{{ url_for('display_image', filename=filename) }}">
+            </div>
+        {% endif %}
+
+        {% if prediction %}
+        <div>
+            <h3>{{ prediction }}</h3>
+        </div>
+        {% endif %}
+        
+        <div class="form">
+          <form method="POST" enctype=multipart/form-data>
+            <input type="file" name="file">
+            <input type="submit" value="Upload">
+          </form>
+        </div>
+    </body>
+</html>
