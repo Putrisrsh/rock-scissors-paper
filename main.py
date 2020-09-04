@@ -61,7 +61,33 @@ def process_file(filepath):
   data[0] = normalized_image_array
 
   prediction = model.predict(data)
-  return "this is the output ", prediction
+  prediction_text_one = truncate(prediction.item(0)*100, 5)
+  prediction_text_two = truncate(prediction.item(1)*100, 5)
+  prediction_text_three = truncate(prediction.item(2)*100, 5)
+
+  if prediction.item(0) > PREDICTION_THRESHOLD:
+    return "this is {}% a {}!".format(prediction_text_one, "rock")
+
+  if prediction.item(1) > PREDICTION_THRESHOLD:
+    return "this is {}% a {}!".format(prediction_text_two, "scissor")
+  
+  if prediction.item(2) > PREDICTION_THRESHOLD:
+    return "this is {}% a {}!".format(prediction_text_three, "paper")
+
+
+
+def truncate(f, n):
+    '''Truncates/pads a float f to n decimal places without rounding'''
+    s = '{}'.format(f)
+
+    if 'e' in s or 'E' in s:
+        return '{0:.{1}f}'.format(f, n)
+
+    i, p, d = s.partition('.')
+
+    return '.'.join([i, (d+'0'*n)[:n]])
+
+
 
 
 if __name__ == "__main__":
