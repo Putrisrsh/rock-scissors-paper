@@ -10,7 +10,7 @@ import random
 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
-PREDICTION_THRESHOLD = .9
+PREDICTION_THRESHOLD = .6
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -79,6 +79,8 @@ def process_file(filepath):
       return "this is {}% a {}".format(prediction_text_one, "rock. mine is scissor, you win.")
     elif num == 3:
       return "this is {}% a {}".format(prediction_text_one, "rock. mine is paper, i win.")
+  else:
+    return "this is {}% a {}".format(prediction_text_one, "shit wtf u just uploaded")
 
   if prediction.item(1) > PREDICTION_THRESHOLD:
     if num == 1:
@@ -87,7 +89,10 @@ def process_file(filepath):
       return "this is {}% a {}".format(prediction_text_one, "scissor. mine is scissor too, we're draw.")
     elif num == 3:
       return "this is {}% a {}".format(prediction_text_one, "scissor. mine is paper, you win.")
-  
+  else:
+    return "this is {}% a {}".format(prediction_text_one, "shit wtf u just uploaded")
+
+
   if prediction.item(2) > PREDICTION_THRESHOLD:
     if num == 1:
       return "this is {}% a {}".format(prediction_text_one, "paper. mine is rock, you win.")
@@ -95,6 +100,8 @@ def process_file(filepath):
       return "this is {}% a {}".format(prediction_text_one, "paper. mine is scissor, i win.")
     elif num == 3:
       return "this is {}% a {}".format(prediction_text_one, "paper. mine is paper too, we're draw.")
+  else:
+    return "this is {}% a {}".format(prediction_text_one, "shit wtf u just uploaded")
 
 
 def truncate(f, n):
