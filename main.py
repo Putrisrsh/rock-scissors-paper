@@ -6,6 +6,8 @@ import numpy as np
 import tensorflow.keras
 from PIL import Image, ImageOps
 
+import random
+
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 PREDICTION_THRESHOLD = .9
@@ -65,15 +67,34 @@ def process_file(filepath):
   prediction_text_two = truncate(prediction.item(1)*100, 5)
   prediction_text_three = truncate(prediction.item(2)*100, 5)
 
+  # 1 is rock
+  # 2 is scissor
+  # 3 is paper
+  num = random.randint(1,3)
+
   if prediction.item(0) > PREDICTION_THRESHOLD:
-    return "this is {}% a {}!".format(prediction_text_one, "rock")
+    if num == 1:
+      return "this is {}% a {}".format(prediction_text_one, "rock. mine is rock too, we're draw.")
+    elif num == 2:
+      return "this is {}% a {}".format(prediction_text_one, "rock. mine is scissor, you win.")
+    elif num == 3:
+      return "this is {}% a {}".format(prediction_text_one, "rock. mine is paper, i win.")
 
   if prediction.item(1) > PREDICTION_THRESHOLD:
-    return "this is {}% a {}!".format(prediction_text_two, "scissor")
+    if num == 1:
+      return "this is {}% a {}".format(prediction_text_one, "scissor. mine is rock, i win.")
+    elif num == 2:
+      return "this is {}% a {}".format(prediction_text_one, "scissor. mine is scissor too, we're draw.")
+    elif num == 3:
+      return "this is {}% a {}".format(prediction_text_one, "scissor. mine is paper, you win.")
   
   if prediction.item(2) > PREDICTION_THRESHOLD:
-    return "this is {}% a {}!".format(prediction_text_three, "paper")
-
+    if num == 1:
+      return "this is {}% a {}".format(prediction_text_one, "paper. mine is rock, you win.")
+    elif num == 2:
+      return "this is {}% a {}".format(prediction_text_one, "paper. mine is scissor, i win.")
+    elif num == 3:
+      return "this is {}% a {}".format(prediction_text_one, "paper. mine is paper too, we're draw.")
 
 
 def truncate(f, n):
